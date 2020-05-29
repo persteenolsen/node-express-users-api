@@ -1,0 +1,29 @@
+{
+    "name": "node-express-users-api",
+    "version": "1.0.0",
+    "description": "NodeJS JWT Authentication API",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://pso-express-react-users.azurewebsites.net"
+    },
+    "scripts": {
+        "start": "nodemon ./server.js"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.18.3",
+        "cors": "^2.8.4",
+        "express": "^4.16.3",
+        "express-jwt": "^5.3.1",
+        "jsonwebtoken": "^8.2.2",
+        "nodemailer": "^6.4.6",
+        "mysql": "^2.13.0",
+        "request": "^2.83.0",
+        "rootpath": "^0.1.2",
+        "zip-folder": "^1.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^1.17.5"
+    }
+}

@@ -1,0 +1,14 @@
+
+{
+
+    "emailFrom": "yourmailfrom",
+    "smtpOptions": {
+        "host":"yoursmtphostname",
+        "port":587,
+        "auth" : {
+              "user":"yourusername",
+              "pass": "yourpassword"
+             }
+    }
+
+} 
