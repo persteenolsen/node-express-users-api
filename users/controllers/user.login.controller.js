@@ -32,7 +32,7 @@ router.post('/authenticate', function (req, res, next) {
             }
         else {
              console.log("Ups, No Users ready for login at the Controller! " );
-             res.status(400).send( { message: 'Try to enter our Email and Password again ! If you just registred do verify you Email or try Forgot Password !'} ); 
+             res.status(400).send( { message: 'Try to enter your Email and Password again ! If you just registred do verify you Email or try Forgot Password !'} ); 
             }
 
      }).catch( error => {

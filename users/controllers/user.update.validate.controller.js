@@ -4,17 +4,19 @@ const router = express.Router();
 const UserUpdateValidateService = require('../services/user.update.validate.service');
 const DatabaseConfig = require('../../db/database.config');
 
-const UserValidate = require('./user.validate');
+const UserValidate = require('../model/user.validate');
 
 module.exports = router;
  
 
 router.put('/:id', function (req, res, next) {
-    
-  const v = new UserValidate();
-  const inputdatavalid = v.validateInputDataUpdate(req.body.firstName, req.body.lastName, req.body.email, req.body.password );
-
-  if ( inputdatavalid == true ){
+   
+  // An instante of the User Model with form input validation
+  const v = new UserValidate( req.body.title, req.body.firstName, req.body.lastName, req.body.email, req.body.password );
+  const inputdatavalid = v.validateInputDataUpdate();
+  
+  // Only if all input user data are valid update the User
+  if ( inputdatavalid === true ){
           
        const dbconfig = new DatabaseConfig();
        const connectionString = dbconfig.getDBConnectionPool();

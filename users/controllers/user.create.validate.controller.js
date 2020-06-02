@@ -4,17 +4,17 @@ const router = express.Router();
 const UserCreateValidateService = require('../services/user.create.validate.service');
 const DatabaseConfig = require('../../db/database.config');
 
-const UserValidate = require('./user.validate');
+const UserValidate = require('../model/user.validate');
 
 module.exports = router;
 
 
 router.post('/', function (req, res, next) {
-  
-    const v = new UserValidate();
-    const inputdatavalid = v.validateInputDataCreateRegister(req.body.firstName, req.body.lastName, req.body.email, req.body.password );
+      
+    const v = new UserValidate( req.body.title, req.body.firstName, req.body.lastName, req.body.email, req.body.password );
+    const inputdatavalid = v.validateInputDataUpdate();
 
-    if ( inputdatavalid == true ){
+    if ( inputdatavalid === true ){
             
          const dbconfig = new DatabaseConfig();
          const connectionString = dbconfig.getDBConnectionPool();

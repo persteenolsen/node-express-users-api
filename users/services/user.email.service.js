@@ -26,7 +26,7 @@ class UserEmailService {
          
         htmlbody += message; 
         htmlbody += "<p><b>Do not reply to this Email !</b></p>";
-        htmlbody += "<p>Best regards from the team at the Node.js Membership System :-)</p>";
+        htmlbody += "<p>Best regards from the Membership System :-)</p>";
         
         var mailOptions = {
                from: configsmtp.emailFrom,
@@ -81,7 +81,7 @@ class UserEmailService {
          
         htmlbody += message; 
         htmlbody += "<p><b>Do not reply to this Email !</b></p>";
-        htmlbody += "<p>Best regards from the team at the Node.js Membership System :-)</p>";
+        htmlbody += "<p>Best regards from the Membership System :-)</p>";
         
         var mailOptions = {
                from: configsmtp.emailFrom,

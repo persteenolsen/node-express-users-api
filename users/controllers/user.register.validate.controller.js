@@ -7,29 +7,24 @@ const DatabaseConfig = require('../../db/database.config');
 const UserRegisterService = require('../services/user.register.validate.service');
 
 const UserEmailService = require('../services/user.email.service');
-const UserValidate = require('./user.validate');
-
+const UserValidate = require('../model/user.validate');
 
 module.exports = router;
-
-
-/*router.post('/verify-email', function (req, res, next) {
-
-}); */
 
 function generateToken() {
      return crypto.randomBytes(40).toString('hex');
  }
 
+
 //------------------------------USER REGISTER and SEND VERIFY EMAIL-----------------------------------------
 router.post('/register', function (req, res, next) {
-    
+         
+    // An instante of the User Model with form input validation
+    const v = new UserValidate( req.body.title, req.body.firstName, req.body.lastName, req.body.email, req.body.password );
+    const inputdatavalid = v.validateInputDataUpdate();
    
-    const v = new UserValidate();
-    const inputdatavalid = v.validateInputDataCreateRegister(req.body.firstName, req.body.lastName, req.body.email, req.body.password );
-
-    // If all user data are valid add the User
-    if ( inputdatavalid == true ){
+    // Only if all input user data are valid add the User
+    if ( inputdatavalid === true ){
 
          const dbconfig = new DatabaseConfig();
          const connectionString = dbconfig.getDBConnectionPool();
