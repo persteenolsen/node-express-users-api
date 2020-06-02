@@ -12,8 +12,10 @@ module.exports = router;
 router.put('/:id', function (req, res, next) {
    
   // An instante of the User Model with form input validation
-  const v = new UserValidate( req.body.title, req.body.firstName, req.body.lastName, req.body.email, req.body.password );
-  const inputdatavalid = v.validateInputDataUpdate();
+  const uv = new UserValidate( req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
+  const inputdatavalid = uv.validateInputDataUpdate();
+
+  console.log( "ID: " + uv.id );
   
   // Only if all input user data are valid update the User
   if ( inputdatavalid === true ){
@@ -23,14 +25,14 @@ router.put('/:id', function (req, res, next) {
        var s = new UserUpdateValidateService();
 
         // Consuming Promises: First a function to check if the email is already used by another User
-        let promisevalidate = s.ValidateMailEditUser( connectionString, req.params.id, req.body.email );
+        let promisevalidate = s.ValidateMailEditUser( connectionString, req.params.id, uv.email );
         promisevalidate.then(( isemailfree ) => {
                          
         // Chaining Promises: If the email is free try to update the User and if the User 
         // was updated return true to the next THEN
         if( isemailfree ){
               console.log("The User email is free - inside the Controller first THEN: " + isemailfree );
-              userupdated = s.doEditUser( connectionString, req.params.id, req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
+              userupdated = s.doEditUser( connectionString, req.params.id, uv.email, uv.password, uv.title, uv.firstname, uv.lastname, uv.role );
               return userupdated;
               }
          else {

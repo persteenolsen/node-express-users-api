@@ -20,8 +20,8 @@ function generateToken() {
 router.post('/register', function (req, res, next) {
          
     // An instante of the User Model with form input validation
-    const v = new UserValidate( req.body.title, req.body.firstName, req.body.lastName, req.body.email, req.body.password );
-    const inputdatavalid = v.validateInputDataUpdate();
+    const uv = new UserValidate( req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
+    const inputdatavalid = uv.validateInputDataUpdate();
    
     // Only if all input user data are valid add the User
     if ( inputdatavalid === true ){
@@ -38,12 +38,12 @@ router.post('/register', function (req, res, next) {
          console.log("The User request has origin: " + origin );
         
          // Consuming Promises: First a function to check if the email is already used by another User
-         let promisevalidate = s.ValidateMailRegisterUser( connectionString, req.body.email );
+         let promisevalidate = s.ValidateMailRegisterUser( connectionString, uv.email );
          promisevalidate.then(( isemailfree ) => {
             
             if( isemailfree ){
                  console.log("The User email is free - Controller first THEN: " + isemailfree );
-                 userregistered = s.doRegisterUser( connectionString, verificationToken, req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
+                 userregistered = s.doRegisterUser( connectionString, verificationToken, uv.email, uv.password, uv.title, uv.firstname, uv.lastname, uv.role );
                 
                  return userregistered;
                  }
@@ -56,7 +56,7 @@ router.post('/register', function (req, res, next) {
                
                  if( userregistered ){ 
                      console.log("The User was registered - Controller second THEN: " + userregistered );
-                     sendemail = useremail.SendVerifyEmailRegisterUser( origin, verificationToken, req.body.email );
+                     sendemail = useremail.SendVerifyEmailRegisterUser( origin, verificationToken, uv.email );
                      
                      return sendemail;
                     }

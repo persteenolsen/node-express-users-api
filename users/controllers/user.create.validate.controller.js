@@ -11,8 +11,10 @@ module.exports = router;
 
 router.post('/', function (req, res, next) {
       
-    const v = new UserValidate( req.body.title, req.body.firstName, req.body.lastName, req.body.email, req.body.password );
-    const inputdatavalid = v.validateInputDataUpdate();
+      
+    // An instante of the User Model with form input validation
+    const uv = new UserValidate( req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
+    const inputdatavalid = uv.validateInputDataUpdate();
 
     if ( inputdatavalid === true ){
             
@@ -21,14 +23,14 @@ router.post('/', function (req, res, next) {
          var s = new UserCreateValidateService();
         
           // Consuming Promises: First a function to check if the email is already used by another User
-          let promisevalidate = s.ValidateMailCreateUser( connectionString, req.body.email );
+          let promisevalidate = s.ValidateMailCreateUser( connectionString, uv.email );
           promisevalidate.then(( isemailfree ) => {
                           
              // Chaining Promises: If the email is free try to create the User and if the User 
              // was created return true to the next THEN
              if( isemailfree ){
                   console.log("The User email is free - inside the Controller first THEN: " + isemailfree );
-                  usercreated = s.doCreateUser( connectionString, req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
+                  usercreated = s.doCreateUser( connectionString, uv.email, uv.password, uv.title, uv.firstname, uv.lastname, uv.role );
                   return usercreated;
                   }
               else {

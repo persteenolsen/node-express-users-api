@@ -1,16 +1,16 @@
 class UserValidate {
     
-   // Constructor Method reciving the some of the values of the User Model / form input data
-   constructor( title, firstname, lastname, email, password ) {
-     
-      // Note: For now title doest not need validation comming from a dropdown
-      this.title = title;
-
-      this.firstname = firstname;
-      this.lastname = lastname;
+   // Constructor taking some of the values of the User Model / form input data as arguments
+     constructor( email, password, title, firstname, lastname, role ) {
+            
+      // Note: For now role and title doest not need validation comming from a dropdown
       this.email = email;
       this.password = password;
-
+      this.title = title;
+      this.firstname = firstname;
+      this.lastname = lastname;
+      this.role = role;
+     
     }
 
 
