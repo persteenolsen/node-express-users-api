@@ -30,16 +30,17 @@ class UserCreateValidateService {
      return isemailfreepromise;
       
    }
-          
+  
+       
+   // Note: The User properties are stored inside the User object representing the User Model
+   // In user.register.validate.service.js all user properties are parsed as arguments as another way !   
+   async doCreateUser( con, user ) {
+           
       
-
-   async doCreateUser( con, email, password, title, firstname, lastname, role ) {
-                    
-    
-      let promiseusercreated = await new Promise((resolve, reject) => {
+      let promiseusercreated = await new Promise(( resolve, reject ) => {
   
           const salt = bcrypt.genSaltSync(10);
-          const hash = bcrypt.hashSync( password, salt );
+          const hash = bcrypt.hashSync( user.password, salt );
           var datecreated = "";
           datecreated = new Date().toISOString();
         
@@ -49,13 +50,13 @@ class UserCreateValidateService {
           sqlString += " isVerified, dateCreated, acceptterms ";
           sqlString += " ) values( ";
         
-          sqlString += "'" + email + "','" + title + "";
-          sqlString += "', '" + firstname + "', '" + lastname + "";
+          sqlString += "'" + user.email + "','" + user.title + "";
+          sqlString += "', '" + user.firstname + "', '" + user.lastname + "";
               
-          if( (! role ) || role == '' || role === 'undefined' )
+          if( (! user.role ) || user.role == '' || user.role === 'undefined' )
               sqlString += "', 'User";
           else
-              sqlString += "', '" + role + "";
+              sqlString += "', '" + user.role + "";
         
           sqlString += "', '" + hash + "";
           sqlString += "', 'true', '" + datecreated + "', 'true'";
@@ -82,6 +83,7 @@ class UserCreateValidateService {
       return promiseusercreated;
                     
     }   
+   
 
   
 }

@@ -33,11 +33,12 @@ class UserRegisterService {
        
     }
            
-       
-
+        
+     // Note: The properties from the User Model parsed one by one from the controller as arguments 
+     // A different way is used in user.create.validate.service.js and user.update.validate.service.js !   
      async doRegisterUser( con, verificationToken, email, password, title, firstname, lastname, role ) {
                      
-        let promiseuserregistered = await new Promise((resolve, reject) => {
+        let promiseuserregistered = await new Promise(( resolve, reject ) => {
    
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync( password, salt );

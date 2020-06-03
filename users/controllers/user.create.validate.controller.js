@@ -11,8 +11,8 @@ module.exports = router;
 
 router.post('/', function (req, res, next) {
       
-      
-    // An instante of the User Model with form input validation
+        
+    // An instante of the User Model are created and function call to make form input validation
     const uv = new UserValidate( req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
     const inputdatavalid = uv.validateInputDataUpdate();
 
@@ -26,12 +26,15 @@ router.post('/', function (req, res, next) {
           let promisevalidate = s.ValidateMailCreateUser( connectionString, uv.email );
           promisevalidate.then(( isemailfree ) => {
                           
-             // Chaining Promises: If the email is free try to create the User and if the User 
-             // was created return true to the next THEN
-             if( isemailfree ){
-                  console.log("The User email is free - inside the Controller first THEN: " + isemailfree );
-                  usercreated = s.doCreateUser( connectionString, uv.email, uv.password, uv.title, uv.firstname, uv.lastname, uv.role );
-                  return usercreated;
+              // Chaining Promises: If the email is free try to create the User and if the User 
+              // was created return true to the next THEN
+              if( isemailfree ){
+                   console.log("The User email is free - inside the Controller first THEN: " + isemailfree );
+                                    
+                   // Note: The User properties are stored in the uv object representing the User Model
+                   // A different way is used in user.register.validate.controller.js !
+                   usercreated = s.doCreateUser( connectionString, uv );
+                   return usercreated;
                   }
               else {
                    console.log("The User email is NOT free - inside the Controller first THEN: " + isemailfree );
@@ -39,10 +42,8 @@ router.post('/', function (req, res, next) {
                   }     
                                 
              }).then(( usercreated ) => {
-                 
-                 // Note: Here verification email could be send because of the fact that the email was not
-                 // used by another User and the User was created successfully !
-                 // For now a 200 status code is send back to the client CLIENT :-) 
+                                 
+                 // If true the User was created successfully and a 200 status code is send back to the CLIENT :-) 
                  if(  usercreated  ){ 
                       console.log("The User was created - inside the Controller second THEN: " +  usercreated  );
                       res.status(200).send( { message: 'The User was created successfully !' } );  

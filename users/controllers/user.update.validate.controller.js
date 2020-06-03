@@ -11,11 +11,9 @@ module.exports = router;
 
 router.put('/:id', function (req, res, next) {
    
-  // An instante of the User Model with form input validation
+  // An instante of the User Model are created and function call to make form input validation
   const uv = new UserValidate( req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
   const inputdatavalid = uv.validateInputDataUpdate();
-
-  console.log( "ID: " + uv.id );
   
   // Only if all input user data are valid update the User
   if ( inputdatavalid === true ){
@@ -32,7 +30,10 @@ router.put('/:id', function (req, res, next) {
         // was updated return true to the next THEN
         if( isemailfree ){
               console.log("The User email is free - inside the Controller first THEN: " + isemailfree );
-              userupdated = s.doEditUser( connectionString, req.params.id, uv.email, uv.password, uv.title, uv.firstname, uv.lastname, uv.role );
+              
+              // Note: The User properties are stored in the uv object representing the User Model
+              // A different way is used in user.register.validate.controller.js !
+              userupdated = s.doEditUser( connectionString, req.params.id, uv );
               return userupdated;
               }
          else {
@@ -42,9 +43,7 @@ router.put('/:id', function (req, res, next) {
                                
             }).then(( userupdated ) => {
                 
-               // Note: Here verification email could be send because of the fact that the email was not
-               // used by another User and the User was updated successfully !
-               // For now a 200 status code is send back to the client CLIENT :-) 
+               // If true the User was updated successfully and a 200 status code is send back to the CLIENT :-) 
                if( userupdated ){ 
                     console.log("The User was updated - inside the Controller second THEN: " + userupdated );
                     res.status(200).send( { message: 'The User was updated successfully !' } );  

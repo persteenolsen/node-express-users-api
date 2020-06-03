@@ -43,6 +43,8 @@ router.post('/register', function (req, res, next) {
             
             if( isemailfree ){
                  console.log("The User email is free - Controller first THEN: " + isemailfree );
+
+                 // Note: A different way is used in user.update.validate.controller.js and user.create.validate.controller.js !
                  userregistered = s.doRegisterUser( connectionString, verificationToken, uv.email, uv.password, uv.title, uv.firstname, uv.lastname, uv.role );
                 
                  return userregistered;

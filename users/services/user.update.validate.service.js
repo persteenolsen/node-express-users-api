@@ -32,15 +32,25 @@ class UserUpdateValidateService {
      } 
   
     
-   // Perform the functionality for Update the selected person
-  async doEditUser( con, id, email, password, title, firstname, lastname, role ) {
-           
-     let promiseuserupdated = await new Promise((resolve, reject) => {
+   // Note: The User properties are stored inside the User object representing the User Model
+   // The id of the User are stored outside the Model
+   // In user.register.validate.service.js all user properties are parsed as arguments as another way !
+   async doEditUser( con, id, user ) {
+       
+      // Just for showing / testing the properties of the User
+      /*console.log("User Email: " + user.email ); 
+      console.log("User Password: " + user.password ); 
+      console.log("User Role: " + user.role ); 
+      console.log("User Title: " + user.title ); 
+      console.log("User Firstname: " + user.firstname ); 
+      console.log("User Lastname: " + user.lastname ); */
+
+      let promiseuserupdated = await new Promise(( resolve, reject ) => {
 
         var sqlStringPassword = "";
-        if( password != "" ){
+        if( user.password != "" ){
             const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync( password, salt);
+            const hash = bcrypt.hashSync( user.password, salt);
 
             sqlStringPassword  += ", passwordhash='" + hash + "'";
             console.log("Password Hash: " + hash ); 
@@ -50,13 +60,13 @@ class UserUpdateValidateService {
        
             var sqlString = "";
             sqlString += "UPDATE node_crud_users_jwt SET ";
-            sqlString += "email='" + email + "', title='" + title + "";
-            sqlString += "', firstName='" + firstname + "', lastName='" + lastname + "";
+            sqlString += "email='" + user.email + "', title='" + user.title + "";
+            sqlString += "', firstName='" + user.firstname + "', lastName='" + user.lastname + "";
         
-            if( (! role ) || role == '' || role === 'undefined' )
+            if( (! user.role ) || user.role == '' || user.role === 'undefined' )
                sqlString += "', role='User'"; 
             else
-               sqlString += "', role='" + role + "'";      
+               sqlString += "', role='" + user.role + "'";      
 
              sqlString += sqlStringPassword;
              sqlString += " WHERE Id=" + id;
@@ -83,8 +93,9 @@ class UserUpdateValidateService {
        console.log( "Leaving Update - Outside the Promise in Service !" );
        return promiseuserupdated;
                     
-    }
+    } 
  
+   
  
 }
 
