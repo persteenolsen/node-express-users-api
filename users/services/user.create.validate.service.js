@@ -35,8 +35,7 @@ class UserCreateValidateService {
    // Note: The User properties are stored inside the User object representing the User Model
    // In user.register.validate.service.js all user properties are parsed as arguments as another way !   
    async doCreateUser( con, user ) {
-           
-      
+             
       let promiseusercreated = await new Promise(( resolve, reject ) => {
   
           const salt = bcrypt.genSaltSync(10);
@@ -52,11 +51,8 @@ class UserCreateValidateService {
         
           sqlString += "'" + user.email + "','" + user.title + "";
           sqlString += "', '" + user.firstname + "', '" + user.lastname + "";
-              
-          if( (! user.role ) || user.role == '' || user.role === 'undefined' )
-              sqlString += "', 'User";
-          else
-              sqlString += "', '" + user.role + "";
+          
+          sqlString += "', '" + user.role + "";
         
           sqlString += "', '" + hash + "";
           sqlString += "', 'true', '" + datecreated + "', 'true'";

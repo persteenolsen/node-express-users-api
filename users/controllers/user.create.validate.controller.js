@@ -10,11 +10,20 @@ module.exports = router;
 
 
 router.post('/', function (req, res, next) {
-      
-        
+              
     // An instante of the User Model are created and function call to make form input validation
     const uv = new UserValidate( req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
-    const inputdatavalid = uv.validateInputDataUpdate();
+        
+    const emailvalid = uv.isEmailValid(min=8, max=25);
+    const passwordvalid = uv.isPasswordValidCreateRegister(min=6, max=15);
+    const titlevalid = uv.isTitleValid(min=2, max=4);
+    const firstnamevalid = uv.isFirstNameValid(min=2, max=15);
+    const lastnamevalid = uv.isLastNameValid(min=2, max=15);
+    const rolevalid = uv.isRoleValid(min=4, max=5);
+
+    const inputdatavalid = uv.isInputDataValid();
+
+    console.log("Controller - All input data are valid: " + inputdatavalid );
 
     if ( inputdatavalid === true ){
             

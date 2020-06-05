@@ -5,7 +5,7 @@ class UserUpdateValidateService {
   
   async ValidateMailEditUser( con, id, email ){
      
-     let isemailfreepromise = await new Promise((resolve, reject) => {
+     let isemailfreepromise = await new Promise(( resolve, reject ) => {
              
         con.query( "SELECT email FROM node_crud_users_jwt WHERE email LIKE '" +  email + "' AND id <> " + id, function (err, result, fields) {
         if ( err ) 
@@ -37,17 +37,12 @@ class UserUpdateValidateService {
    // In user.register.validate.service.js all user properties are parsed as arguments as another way !
    async doEditUser( con, id, user ) {
        
-      // Just for showing / testing the properties of the User
-      /*console.log("User Email: " + user.email ); 
-      console.log("User Password: " + user.password ); 
-      console.log("User Role: " + user.role ); 
-      console.log("User Title: " + user.title ); 
-      console.log("User Firstname: " + user.firstname ); 
-      console.log("User Lastname: " + user.lastname ); */
-
-      let promiseuserupdated = await new Promise(( resolve, reject ) => {
+     let promiseuserupdated = await new Promise(( resolve, reject ) => {
 
         var sqlStringPassword = "";
+
+        // Note: This validation could / should maybe be done in the Model but the hashed password is
+        // not an input value but the password is - ? 
         if( user.password != "" ){
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync( user.password, salt);
@@ -62,11 +57,7 @@ class UserUpdateValidateService {
             sqlString += "UPDATE node_crud_users_jwt SET ";
             sqlString += "email='" + user.email + "', title='" + user.title + "";
             sqlString += "', firstName='" + user.firstname + "', lastName='" + user.lastname + "";
-        
-            if( (! user.role ) || user.role == '' || user.role === 'undefined' )
-               sqlString += "', role='User'"; 
-            else
-               sqlString += "', role='" + user.role + "'";      
+            sqlString += "', role='" + user.role + "'";      
 
              sqlString += sqlStringPassword;
              sqlString += " WHERE Id=" + id;

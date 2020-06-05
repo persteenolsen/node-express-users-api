@@ -53,11 +53,7 @@ class UserRegisterService {
          
             sqlString += "'" + email + "','" + title + "";
             sqlString += "', '" + firstname + "', '" + lastname + "";
-               
-            if( (! role ) || role == '' || role === 'undefined' )
-                sqlString += "', 'User";
-            else
-                sqlString += "', '" + role + "";
+            sqlString += "', '" + role + "";
          
             sqlString += "', '" + hash + "";
             sqlString += "', 'false', '" + datecreated + "', '" + verificationToken + "', 'true'";

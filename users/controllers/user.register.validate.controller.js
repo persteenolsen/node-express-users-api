@@ -21,7 +21,19 @@ router.post('/register', function (req, res, next) {
          
     // An instante of the User Model with form input validation
     const uv = new UserValidate( req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
-    const inputdatavalid = uv.validateInputDataUpdate();
+    //const inputdatavalid = uv.validateInputDataUpdate();
+     
+    const emailvalid = uv.isEmailValid(min=8, max=25);
+    const passwordvalid = uv.isPasswordValidCreateRegister(min=6, max=15);
+    const titlevalid = uv.isTitleValid(min=2, max=4);
+    const firstnamevalid = uv.isFirstNameValid(min=2, max=15);
+    const lastnamevalid = uv.isLastNameValid(min=2, max=15);
+    const rolevalid = uv.isRoleValid(min=4, max=5);
+
+    const inputdatavalid = uv.isInputDataValid();
+
+    console.log("Controller - All input data are valid: " + inputdatavalid );
+
    
     // Only if all input user data are valid add the User
     if ( inputdatavalid === true ){
@@ -41,20 +53,20 @@ router.post('/register', function (req, res, next) {
          let promisevalidate = s.ValidateMailRegisterUser( connectionString, uv.email );
          promisevalidate.then(( isemailfree ) => {
             
-            if( isemailfree ){
-                 console.log("The User email is free - Controller first THEN: " + isemailfree );
+                if( isemailfree ){
+                    console.log("The User email is free - Controller first THEN: " + isemailfree );
 
-                 // Note: A different way is used in user.update.validate.controller.js and user.create.validate.controller.js !
-                 userregistered = s.doRegisterUser( connectionString, verificationToken, uv.email, uv.password, uv.title, uv.firstname, uv.lastname, uv.role );
+                    // Note: A different way is used in user.update.validate.controller.js and user.create.validate.controller.js !
+                    userregistered = s.doRegisterUser( connectionString, verificationToken, uv.email, uv.password, uv.title, uv.firstname, uv.lastname, uv.role );
                 
-                 return userregistered;
-                 }
-             else {
-                  console.log("The User email is NOT free - Controller first THEN: " + isemailfree );
-                  res.status(400).send( { message: 'The User was not registered because the Email is already in use. Try use Forgot Password !'} );
-                  }     
+                    return userregistered;
+                    }
+                 else {
+                      console.log("The User email is NOT free - Controller first THEN: " + isemailfree );
+                      res.status(400).send( { message: 'The User was not registered because the Email is already in use. Try use Forgot Password !'} );
+                     }     
                                
-             }).then(( userregistered ) => {
+            }).then(( userregistered ) => {
                
                  if( userregistered ){ 
                      console.log("The User was registered - Controller second THEN: " + userregistered );
@@ -65,7 +77,7 @@ router.post('/register', function (req, res, next) {
                 else 
                      console.log("The User was not registered - Controller second THEN: " + userregistered );
                        
-               }).then(( sendemail ) => {
+            }).then(( sendemail ) => {
             
                  if( sendemail ){
                      console.log("The User was registered and Verification Email sent - Controller third THEN! " + sendemail );
@@ -75,12 +87,12 @@ router.post('/register', function (req, res, next) {
                      console.log("The User was not registered and no Verification Email sent - Controller third THEN! " + sendemail );
                   
             
-                }).catch( error => {
+            }).catch( error => {
 
                    console.log( "SQL error from Promise displayed in catch - Controller: " + error );
                    res.status(400).send( { message: 'The User was not registered due to an SQL or SMTP error inside Service !'} );
                
-               });
+            });
          
          }
     else {
