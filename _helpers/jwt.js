@@ -14,7 +14,6 @@ function jwt() {
             '/users/forgot-password',
             '/users/reset-password',
             '/users/validate-reset-token',
-            '/users/sendemail',
             '/test'
         			
         ]

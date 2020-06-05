@@ -7,6 +7,7 @@ class DatabaseConfig {
   
   getDBConnectionPool(){
      
+    
     const pool = mysql.createPool({
       connectionLimit: 10,
       host: 'mydbhostname',

@@ -23,8 +23,6 @@ app.get('/test', function (req, res) {
    // console.log('Test');
  })
 
- // Just a test sending an Email !!
- app.use('/users', require('./users/controllers/user.sendmail.controller'));
  
 // api routes
 app.use('/users', require('./users/controllers/user.login.controller'));
