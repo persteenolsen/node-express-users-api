@@ -22,10 +22,10 @@ module.exports = router;
 
     users.then(( usersfound ) => {
              
-        if( usersfound ){
-            console.log("Yes, Number of found Users in Controller: " +  usersfound.length );
+        if( usersfound != "[]" ){
+            console.log("Yes, Users found in Controller: " );
             res.writeHead(200, {"Content-Type": "application/json"});
-            res.end( JSON.stringify( usersfound ));
+            res.end( usersfound );
             }
         else {
              console.log("Ups, No Users found in Controller! " );
@@ -50,9 +50,9 @@ module.exports = router;
     console.log("User Object wrapped in a Promise Get Service at the Controller! " + user );
 
     user.then(( usersfound ) => {
-             
-        if( usersfound ){
-            console.log("Yes, 1 User found in Controller: " +  usersfound.length );
+        
+        if( usersfound != "[]" ){
+            console.log("Yes, 1 User found in Controller: " );
             res.writeHead(200, {"Content-Type": "application/json"});
             res.end( usersfound );
             }

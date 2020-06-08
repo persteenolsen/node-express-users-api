@@ -14,10 +14,11 @@ class UserLoginService {
  // Using the the async / await keywords is strongly recomended !!!!
  async authenticate( con, email, password ) {
 
-   let userWithJwt = [];
-      
+        
    let userloginpromise = await new Promise(( resolve, reject ) => {
-          
+       
+       let userWithJwt = []; 
+
         console.log( 'Process 2 - Ready to perform the SQL inside the Promise - Service !' );
                        
         con.query("SELECT id, title, firstName, lastName, role, email, passwordhash, isVerified FROM node_crud_users_jwt where email LIKE '" + email + "' AND isVerified LIKE 'true'" , function (err, result, fields) {
@@ -59,7 +60,7 @@ class UserLoginService {
             else {
                   console.log( 'Process 2 - Users Email does not match or isVerified is false - Service !' );
                                              
-                 // The Promise is resolved with the value of a stringified object containing 
+                  // The Promise is resolved with the value of a stringified object containing 
                   // an empty User and the value []
                   resolve( JSON.stringify( userWithJwt ) );
                 }
