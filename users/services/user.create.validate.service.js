@@ -6,7 +6,7 @@ class UserCreateValidateService {
    // Note: In this Service class just examples of using the keywords async / await even though it does 
    // not have any impact of the result. However, the sequence of the execution is a bit different 
    // and could be used if the return value would be done by the function and not by 
-   // resolve / reject the promise !   
+   // resolve / reject the promise    
    async ValidateMailCreateUser( con, email ){
        
      let isemailfreepromise = await new Promise(( resolve, reject ) => {

@@ -26,7 +26,7 @@ class UserDeleteService {
           });
       
        // Returning the resolved promise true / false according to row affected which means if the User
-       // was deleted or not
+       // was deleted or not !
        return userdeletedpromise;
 
     }
