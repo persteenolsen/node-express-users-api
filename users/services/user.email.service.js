@@ -8,9 +8,9 @@ const configsmtp = require('../../smtp/config.json');
 class UserEmailService {
   
   
-  async sendPasswordResetEmailUser( origin, resetToken, emailto ){
+  sendPasswordResetEmailUser( origin, resetToken, emailto ){
          
-    let forgotpasswordpromise = await new Promise(( resolve, reject ) => {
+    let forgotpasswordpromise = new Promise(( resolve, reject ) => {
               
         let htmlbody = "<h3>Reset your Password in the Membership System</h3>";
        
@@ -58,14 +58,10 @@ class UserEmailService {
         
     }
 
-     
-
-
-
-
-  async SendVerifyEmailRegisterUser( origin, verificationToken, emailto ){
+   
+  SendVerifyEmailRegisterUser( origin, verificationToken, emailto ){
          
-    let sendemailpromise = await new Promise(( resolve, reject ) => {
+    let sendemailpromise = new Promise(( resolve, reject ) => {
               
         let htmlbody = "<h3>Thank you for register at the Membership System</h3>";
        

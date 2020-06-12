@@ -2,7 +2,9 @@
 
 class UserDeleteService {
       
-    
+// Note: Just an example of using the keywords async / await but here it does not have any impact of
+// the result. However, the sequence of the execution is a bit different and could be used if there is
+// the function would return a value and not the promise !
  async doDeleteUser( con, id ) {
      
       let userdeletedpromise = await new Promise((resolve, reject) => {

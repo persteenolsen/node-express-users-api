@@ -6,9 +6,9 @@ const bcrypt = require("bcryptjs")
 class UserForgotPasswordService {
      
     
-     async ValidateMailForgotPasswordUser( con, email ){
+     ValidateMailForgotPasswordUser( con, email ){
                               
-        let emailfoundpromise = await new Promise(( resolve, reject ) => {
+        let emailfoundpromise = new Promise(( resolve, reject ) => {
                   
             con.query("SELECT email FROM node_crud_users_jwt WHERE email LIKE '" + email + "'", function (err, result, fields) {
             if ( err ) 
@@ -36,9 +36,9 @@ class UserForgotPasswordService {
 
 
    // Perform the functionality for Update the selected person
-   async doForgotPasswordEditUser( con, resetToken, email ) {
+  doForgotPasswordEditUser( con, resetToken, email ) {
            
-    let usereditedforgotpasswordpromise = await new Promise(( resolve, reject ) => {
+    let usereditedforgotpasswordpromise = new Promise(( resolve, reject ) => {
 
        var sqlString = "";
        sqlString += "UPDATE node_crud_users_jwt SET ";

@@ -6,9 +6,9 @@ const bcrypt = require("bcryptjs")
 class UserRegisterService {
      
     
-     async ValidateMailRegisterUser( con, email ){
+    ValidateMailRegisterUser( con, email ){
                               
-        let isemailfreepromise = await new Promise(( resolve, reject ) => {
+        let isemailfreepromise = new Promise(( resolve, reject ) => {
                   
             con.query("SELECT email FROM node_crud_users_jwt WHERE email LIKE '" + email + "'", function (err, result, fields) {
             if ( err ) 
@@ -36,9 +36,9 @@ class UserRegisterService {
         
      // Note: The properties from the User Model parsed one by one from the controller as arguments 
      // A different way is used in user.create.validate.service.js and user.update.validate.service.js !   
-     async doRegisterUser( con, verificationToken, email, password, title, firstname, lastname, role ) {
+     doRegisterUser( con, verificationToken, email, password, title, firstname, lastname, role ) {
                      
-        let promiseuserregistered = await new Promise(( resolve, reject ) => {
+        let promiseuserregistered = new Promise(( resolve, reject ) => {
    
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync( password, salt );

@@ -3,9 +3,9 @@
 class UserGetService {
           
     
- async doGetAllPersons( con ) {
+ doGetAllPersons( con ) {
       
-    let usergetallpromise = await new Promise((resolve, reject) => {
+    let usergetallpromise = new Promise((resolve, reject) => {
         
         let usersfound = [];
 
@@ -43,9 +43,9 @@ class UserGetService {
 
 
      
-  async doGetPerson( con, id ) {
+  doGetPerson( con, id ) {
          
-     let usergetpromise = await new Promise(( resolve, reject ) => {
+     let usergetpromise = new Promise(( resolve, reject ) => {
         
         let theresult = [];
        

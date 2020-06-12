@@ -3,9 +3,9 @@ const bcrypt = require("bcryptjs")
 class UserValidateResetTokenService {
 
   
-  async ValidateResetTokenUser( con, resetToken ){
+  ValidateResetTokenUser( con, resetToken ){
      
-     let validateresetokenpromise = await new Promise((resolve, reject) => {
+     let validateresetokenpromise = new Promise((resolve, reject) => {
              
         con.query( "SELECT resetToken FROM node_crud_users_jwt WHERE resetToken LIKE '" +  resetToken + "'", function (err, result, fields) {
         if ( err ) 

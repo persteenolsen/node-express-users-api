@@ -3,10 +3,10 @@ const bcrypt = require("bcryptjs")
 class UserValidateResetPasswordService {
 
   
-  async ValidateResetPasswordUser( con, resetToken ){
+  ValidateResetPasswordUser( con, resetToken ){
      
      
-     let validateresetpasswordpromise = await new Promise( ( resolve, reject ) => {
+     let validateresetpasswordpromise = new Promise( ( resolve, reject ) => {
              
         con.query( "SELECT resetToken FROM node_crud_users_jwt WHERE resetToken LIKE '" +  resetToken + "'", function (err, result, fields) {
         if ( err ) 
@@ -34,9 +34,9 @@ class UserValidateResetPasswordService {
   
 
    // Perform the functionality for Update the selected person
-   async doResetPasswordUser( con, resetToken, password ) {
+   doResetPasswordUser( con, resetToken, password ) {
            
-    let resetpasswordpromise = await new Promise(( resolve, reject ) => {
+    let resetpasswordpromise = new Promise(( resolve, reject ) => {
 
         var sqlStringPassword = "";
         if( password != "" ){

@@ -3,9 +3,9 @@ const bcrypt = require("bcryptjs")
 class UserUpdateValidateService {
 
   
-  async ValidateMailEditUser( con, id, email ){
+  ValidateMailEditUser( con, id, email ){
      
-     let isemailfreepromise = await new Promise(( resolve, reject ) => {
+     let isemailfreepromise = new Promise(( resolve, reject ) => {
              
         con.query( "SELECT email FROM node_crud_users_jwt WHERE email LIKE '" +  email + "' AND id <> " + id, function (err, result, fields) {
         if ( err ) 
@@ -35,9 +35,9 @@ class UserUpdateValidateService {
    // Note: The User properties are stored inside the User object representing the User Model
    // The id of the User are stored outside the Model
    // In user.register.validate.service.js all user properties are parsed as arguments as another way !
-   async doEditUser( con, id, user ) {
+   doEditUser( con, id, user ) {
        
-     let promiseuserupdated = await new Promise(( resolve, reject ) => {
+     let promiseuserupdated = new Promise(( resolve, reject ) => {
 
         var sqlStringPassword = "";
 

@@ -3,9 +3,9 @@ const bcrypt = require("bcryptjs")
 class UserVerifyEmailService {
 
   
-  async ValidateVerifyEMailUser( con, verificationToken ){
+  ValidateVerifyEMailUser( con, verificationToken ){
      
-     let verificationtokenpromise = await new Promise((resolve, reject) => {
+     let verificationtokenpromise = new Promise((resolve, reject) => {
              
         con.query( "SELECT verificationToken FROM node_crud_users_jwt WHERE verificationToken LIKE '" +  verificationToken + "'", function (err, result, fields) {
         if ( err ) 
@@ -32,9 +32,9 @@ class UserVerifyEmailService {
   
     
    // Perform the functionality for Update the selected person
-  async doVerifyUser( con, verificationToken ) {
+   doVerifyUser( con, verificationToken ) {
            
-     let userverifiedpromise = await new Promise(( resolve, reject ) => {
+     let userverifiedpromise = new Promise(( resolve, reject ) => {
 
         var sqlString = "";
         sqlString += "UPDATE node_crud_users_jwt SET ";
