@@ -7,7 +7,6 @@ class DatabaseConfig {
   
   getDBConnectionPool(){
     
-    
     const pool = mysql.createPool({
       connectionLimit: 10,
       host: 'mydbhostname',
@@ -15,6 +14,7 @@ class DatabaseConfig {
       password: 'mydbpassword',
       database: 'mydbname'
   });
+
 
      return pool;
   }
