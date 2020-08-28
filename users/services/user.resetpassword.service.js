@@ -53,6 +53,10 @@ class UserValidateResetPasswordService {
        sqlString += "UPDATE node_crud_users_jwt SET ";
 
        sqlString += "resetToken=''";
+      
+       // 28-08-2020 - Functionality about the need to reset password within a given time like 24 hours !
+       sqlString += ", resetTokenExpiry=''";
+
        sqlString += ", isVerified='true'";
        sqlString += sqlStringPassword;
 

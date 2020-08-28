@@ -39,11 +39,18 @@ class UserForgotPasswordService {
   doForgotPasswordEditUser( con, resetToken, email ) {
            
     let usereditedforgotpasswordpromise = new Promise(( resolve, reject ) => {
+       
+       // 28-08-2020 - Functionality about the need to reset password within a given time like 24 hours !
+       var resetTokenExpiry = new Date().toISOString();
 
        var sqlString = "";
        sqlString += "UPDATE node_crud_users_jwt SET ";
        sqlString += "isVerified='false', ";
-       sqlString += "resetToken='" + resetToken + "'";
+       sqlString += "resetToken='" + resetToken + "', ";
+       
+       // 28-08-2020 - Functionality about the need to reset password within a given time like 24 hours !
+       sqlString += "resetTokenExpiry='" + resetTokenExpiry + "'";
+
        sqlString += " WHERE email LIKE '" + email + "'";
          
        con.query(sqlString, function (err, results, fields) {

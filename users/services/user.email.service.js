@@ -12,7 +12,7 @@ class UserEmailService {
          
     let forgotpasswordpromise = new Promise(( resolve, reject ) => {
               
-        let htmlbody = "<h3>Reset your Password in the Membership System</h3>";
+        let htmlbody = "<h3>Reset your Password in the Membership System before 24 hours</h3>";
        
         let message = "";
         if (origin) {
