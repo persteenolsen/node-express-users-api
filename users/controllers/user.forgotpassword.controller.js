@@ -8,6 +8,7 @@ const UserForgotPasswordService = require('../services/user.forgotpassword.servi
 
 const UserEmailService = require('../services/user.email.service');
 
+const UserValidate = require('../model/user.validate');
 
 module.exports = router;
 
@@ -19,6 +20,19 @@ function generateToken() {
 //------------------------------USER FORGET PASSWORD SEND EMAIL FOR RESET PASSWORD-----------------------------------------
 router.post('/forgot-password', function (req, res, next) {
     
+          // An instanse of the User Model are created and function call to make form input validation
+    const uv = new UserValidate( req.body.email, "", "", "", "", "" );
+        
+    const emailvalid = uv.isEmailValid(min=8, max=25);
+        
+    // Note: To make sure that the user only can enter valid email format !!
+    // Email dont allowing whitespaces and with limited lengt preventing
+    // long input and scripts-tags and sql-injection. The following wont be allowed:
+    // 1) DROP TABLE; 
+    // 2) OR 10=10
+    // 3) <script>alert('Hello');</script>
+    if( emailvalid  ){
+
          const dbconfig = new DatabaseConfig();
          const connectionString = dbconfig.getDBConnectionPool();
          var s = new UserForgotPasswordService();
@@ -72,6 +86,11 @@ router.post('/forgot-password', function (req, res, next) {
                    res.status(400).send( { message: 'The User Forgot Password could not be done due to an SQL or SMTP error inside Service !'} );
                
                });
+        
+        }
+         // Sending messages to the User if the format are not valid
+         else
+             res.status(400).send( { message: 'Email has invalid format !'} ); 
       
  }); 
 

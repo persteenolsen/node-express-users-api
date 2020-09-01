@@ -15,17 +15,9 @@ module.exports = router;
 router.post('/authenticate', function (req, res, next) {
 
     console.log( " 1 - Controller - Starting the authentication of the User !" );
-    
-    const dbconfig = new DatabaseConfig();
-    const connectionString = dbconfig.getDBConnectionPool();
-
-    var s = new UserLoginService();
-    
-    const password = req.body.password;
-    const email = req.body.email;
-    
+            
     // An instanse of the User Model are created and function call to make form input validation
-    const uv = new UserValidate( email, password, "", "", "", "" );
+    const uv = new UserValidate( req.body.email, req.body.password, "", "", "", "" );
         
     const emailvalid = uv.isEmailValid(min=8, max=25);
     const passwordvalid = uv.isPasswordValidCreateRegister(min=6, max=15);
@@ -37,10 +29,14 @@ router.post('/authenticate', function (req, res, next) {
     // 2) OR 10=10
     // 3) <script>alert('Hello');</script>
     if( emailvalid && passwordvalid ){
+        
+        const dbconfig = new DatabaseConfig();
+        const connectionString = dbconfig.getDBConnectionPool();
+        var s = new UserLoginService();
           
         console.log( " 2 - Controller - Going to call async function doing SQL !" );
 
-        const user = s.authenticate( connectionString, email, password );
+        const user = s.authenticate( connectionString, req.body.email, req.body.password );
 
         console.log( " 7 - Controller - Before then and catch methods !" );
    

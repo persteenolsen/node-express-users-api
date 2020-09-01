@@ -1,6 +1,5 @@
 
 {
-
     "emailFrom": "yourmailfrom",
     "smtpOptions": {
         "host":"yoursmtphostname",
