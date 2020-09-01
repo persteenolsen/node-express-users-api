@@ -31,7 +31,7 @@ class ValidateFormInput {
     ValidateAllLetters( inputtxt ) { 
        
         inputtxt = inputtxt.replace(/\s+/g,'');
-     
+       
         var letters = /^[A-Za-z]+$/;
         if( inputtxt.match(letters) )
             return true;

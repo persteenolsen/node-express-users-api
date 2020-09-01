@@ -128,6 +128,15 @@ class UserValidate {
         const v = new ValidateFormInput();
         
         if( this.password != "" ){
+
+            // Note: Removing all whitespace to prevent SQL-injection and xss
+            // Password and Email dont allowing whitespaces and with limited lengt preventing
+            // long input and scripts-tags and sql-injection. The following wont be allowed:
+            // 1) DROP TABLE; 
+            // 2) OR 10=10
+            // 3) <script>alert('Hello');</script>
+            this.password = this.password.replace(/\s+/g,'');
+
             this.valid_password = v.ValidateStringLength( this.password, min, max );
             console.log("Model - Valid Password: " + this.valid_password );
            } 

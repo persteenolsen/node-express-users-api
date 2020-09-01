@@ -5,13 +5,13 @@ const UserCreateValidateService = require('../services/user.create.validate.serv
 const DatabaseConfig = require('../../db/database.config');
 
 const UserValidate = require('../model/user.validate');
-
+ 
 module.exports = router;
 
 
 router.post('/', function (req, res, next) {
               
-    // An instante of the User Model are created and function call to make form input validation
+    // An instanse of the User Model are created and function call to make form input validation
     const uv = new UserValidate( req.body.email, req.body.password, req.body.title, req.body.firstName, req.body.lastName, req.body.role );
         
     const emailvalid = uv.isEmailValid(min=8, max=25);
