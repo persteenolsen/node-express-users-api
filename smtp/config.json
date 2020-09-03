@@ -1,5 +1,6 @@
-
+ 
 {
+
     "emailFrom": "yourmailfrom",
     "smtpOptions": {
         "host":"yoursmtphostname",
@@ -8,6 +9,6 @@
               "user":"yourusername",
               "pass": "yourpassword"
              }
-    }
+     }
 
 } 

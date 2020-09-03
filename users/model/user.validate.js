@@ -37,53 +37,67 @@ class UserValidate {
         return alldatavalid;
      }
    
-
+    
+    // Note: To avoid a possible long executing time the length of the input is validated 
+    // before using regex to check if the Email has valid format and 
+    // cope with a input like this: lis@test.dkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
     isEmailValid( min, max ){
        const v = new ValidateFormInput();
        
        if( this.email != "" ){
-            this.valid_email = v.ValidateEmail( this.email );
-            if( this.valid_email )
-                this.valid_email = v.ValidateStringLength( this.email, min, max );
+           //  this.valid_email = v.ValidateEmail( this.email );
+           this.valid_email = v.ValidateStringLength( this.email, min, max );
+           if( this.valid_email )
+               // this.valid_email = v.ValidateStringLength( this.email, min, max );
+               this.valid_email = v.ValidateEmail( this.email );
             console.log("Model - Valid Email: " + this.valid_email );
            }
         return this.valid_email;
-     }
-     
-     
+     } 
+
+    // Validate the string length before using regex helps avoid long executing time if the user
+    // enter long / bad input 
     isTitleValid( min, max ){
         const v = new ValidateFormInput();
               
         if( this.title != "" ){
-            this.valid_title = v.ValidateAllLetters( this.title );
+            // this.valid_title = v.ValidateAllLetters( this.title );
+            this.valid_title = v.ValidateStringLength( this.title, min, max );
             if( this.valid_title )
-                this.valid_title = v.ValidateStringLength( this.title, min, max );
+                // this.valid_title = v.ValidateStringLength( this.title, min, max );
+                this.valid_title = v.ValidateAllLetters( this.title );
             console.log("Model - Valid Title: " + this.valid_title );
            }
         return this.valid_title;
      } 
 
-
+    // Validate the string length before using regex helps avoid long executing time if the user
+    // enter long / bad input 
     isFirstNameValid( min, max ){
         const v = new ValidateFormInput();
               
         if( this.firstname != "" ){
-            this.valid_firstname = v.ValidateAllLetters( this.firstname );
+            // this.valid_firstname = v.ValidateAllLetters( this.firstname );
+            this.valid_firstname = v.ValidateStringLength( this.firstname, min, max );
             if( this.valid_firstname )
-                this.valid_firstname = v.ValidateStringLength( this.firstname, min, max );
+                // this.valid_firstname = v.ValidateStringLength( this.firstname, min, max );
+                this.valid_firstname = v.ValidateAllLetters( this.firstname );
             console.log("Model - Valid firstName: " + this.valid_firstname );
            }
         return this.valid_firstname;
      }
          
-      
+    // Validate the string length before using regex helps avoid long executing time if the user
+    // enter long / bad input  
     isLastNameValid( min, max ){
         const v = new ValidateFormInput();
               
         if( this.lastname != "" ){
-            this.valid_lastname = v.ValidateAllLetters( this.lastname );
+            // this.valid_lastname = v.ValidateAllLetters( this.lastname );
+            this.valid_lastname = v.ValidateStringLength( this.lastname, min, max );
             if( this.valid_lastname )
-                this.valid_lastname = v.ValidateStringLength( this.lastname, min, max );
+                // this.valid_lastname = v.ValidateStringLength( this.lastname, min, max );
+                this.valid_lastname = v.ValidateAllLetters( this.lastname );
             console.log("Model - Valid lastName: " + this.valid_lastname );
            }
         return this.valid_lastname;
@@ -116,7 +130,15 @@ class UserValidate {
             console.log("Model - Valid Password is Empty: " + this.valid_password );
             }   
         else {
-            this.valid_password = v.ValidateStringLength( this.password, min, max );
+              // Note: Removing all whitespace to prevent SQL-injection and xss
+              // Password and Email dont allowing whitespaces and with limited lengt preventing
+              // long input and scripts-tags and sql-injection. The following wont be allowed:
+             // 1) DROP TABLE; 
+             // 2) OR 10=10
+             // 3) <script>alert('Hello');</script>
+             this.password = this.password.replace(/\s+/g,'');
+
+             this.valid_password = v.ValidateStringLength( this.password, min, max );
              console.log("Model - Valid Password: " + this.valid_password );
             } 
         return this.valid_password;
