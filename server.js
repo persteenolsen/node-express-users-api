@@ -17,9 +17,9 @@ app.use(cors());
 // use JWT auth to secure the api
 app.use(jwt());
 
-// Just a test for localhost:4000/test granted in jwt.js !
+// Just a test for /test granted in jwt.js !
 app.get('/test', function (req, res) {
-    res.send('Hello World!');
+    res.send('Hello World - 30-05-2023!');
    // console.log('Test');
  })
 
