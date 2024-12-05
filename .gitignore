@@ -9,3 +9,6 @@ package-lock.json
 license
 
 node_modules/
+
+config.json
+database.config.js

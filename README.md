@@ -1,6 +1,10 @@
 
 - A Membership System made in Node.js and Express impemented as a secure Web API 
 
+Last updated: 05-12-2024
+
+Node Version: 20
+
 - This version include email verification after register and forgot password functionality
 - JavaScript ES5, ES6 and ES7
 - The login system is using a JSON Web Token ( JWT )

@@ -25,5 +25,11 @@
     },
     "devDependencies": {
         "nodemon": "^1.17.5"
+    },
+    "engines": {
+        "node": "20.x"
+    },
+    "volta": {
+        "node": "20.18.1"
     }
 }

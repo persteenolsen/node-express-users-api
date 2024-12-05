@@ -19,7 +19,7 @@ app.use(jwt());
 
 // Just a test for /test granted in jwt.js !
 app.get('/test', function (req, res) {
-    res.send('Hello World - 30-05-2023!');
+    res.send('Hello World - 05-12-2024!');
    // console.log('Test');
  })
 
